@@ -6,8 +6,9 @@ from engine.sprite import Sprite
 
 class Project:
     __scenes: list[Scene] = []
-    
     active_scene: Scene = None
+
+    target_fps = 30
 
     def __init__(self, name, width, height):
         self.name = name
@@ -25,8 +26,11 @@ class Project:
             if scene.name == name:
                 raise Exception(f"Scene with name '{name}' already exists.")
             
-        self.__scenes.append(Scene(name))
-        return self.__scenes[-1]
+        new_scene = Scene(name)
+        new_scene.project = self
+            
+        self.__scenes.append(new_scene)
+        return new_scene
 
     def delete_scene(self, name: str):
         for scene in self.__scenes:
@@ -43,26 +47,50 @@ class Project:
                 return scene
             
     # start application
-    def run(self):
+    def run(self, debug=False):
         if self.active_scene == None:
             raise Exception("This project does not have an active scene.")
         
+        debugFont = pygame.font.SysFont("Arial", 16)
+
+        # run all ready scripts on objects
+        for obj in self.active_scene.objects:
+            for script in obj.scripts:
+                script.ready(obj)
+        
         while True:
+            # calculate delta time
+            deltaTime = 1 / self.target_fps
+
             # clear frame
             self.__window.fill(self.active_scene.background_colour.to_tuple())
 
             # draw scene objects
             for obj in self.active_scene.objects:
+                for script in obj.scripts:
+                    script.update(obj, deltaTime)
+
                 if isinstance(obj, Sprite):
                     obj.draw(self.__window)
 
+            # draw debug information
+            if debug:
+                self.__window.blit(
+                    debugFont.render(
+                        f"X: {pygame.mouse.get_pos()[0]}, Y: {pygame.mouse.get_pos()[1]}", 
+                        False, 
+                        self.active_scene.background_colour.invert().to_tuple()
+                    ),
+                    (5, 5)
+                )
+
             # check for events
-            for ev in pygame.event.get():
-                if ev.type == pygame.QUIT:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     pygame.quit()
 
             pygame.display.update()
-            sleep(0.05)
+            sleep(deltaTime)
             
     
 # engine by wilson

@@ -9,10 +9,16 @@ towerdefense.create_scene("level_editor")
 
 towerdefense.active_scene = main_menu
 
-towerdefense.get_scene("main_menu").background_colour = Colour.from_hex("#00ff00")
+main_menu.background_colour = Colour.from_hex("#00ff00")
 
 # add objects buttons stuff
-patrick = Sprite(50, 50, "patrick.png")
-towerdefense.active_scene.objects.append(patrick)
+patrick = Sprite(100, 100, "patrick.png")
+patrick.scale_x = 0.3
+patrick.scale_y = 0.3
 
-towerdefense.run()
+import patrick as patricklib
+patrick.add_script(patricklib)
+
+main_menu.add_object(patrick)
+
+towerdefense.run(True)

@@ -1,3 +1,5 @@
+from random import randint
+
 class Vector:
     def __init__(self, x: float, y: float):
         self.x = x
@@ -26,3 +28,16 @@ class Colour:
         if len(hex_code) != 6:
             raise Exception("Invalid colour hex code specified.")
         return Colour(int(hex_code[0:2], 16), int(hex_code[2:4], 16), int(hex_code[4:6], 16))
+    
+    def random():
+        return Colour(randint(0, 255), randint(0, 255), randint(0, 255))
+    
+    def invert(self):
+        return Colour(255 - self.red, 255 - self.green, 255 - self.blue)
+    
+class Rectangle:
+    def __init__(self, x: float, y: float, width: float = 0, height: float = 0):
+        self.x = x
+        self.y = y
+        self.width = width if width > 0 else 2 ** 16
+        self.height = height if height > 0 else 2 ** 16
