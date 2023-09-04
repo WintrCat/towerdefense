@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 
 from engine.scene import Scene
 from engine.sprite import Sprite
@@ -12,6 +13,8 @@ class Project:
         self.name = name
         self.width = width
         self.height = height
+
+        pygame.init()
 
         self.__window = pygame.display.set_mode((width, height))
         pygame.display.set_caption(name)
@@ -44,7 +47,6 @@ class Project:
         if self.active_scene == None:
             raise Exception("This project does not have an active scene.")
         
-        pygame.init()
         while True:
             # clear frame
             self.__window.fill(self.active_scene.background_colour.to_tuple())
@@ -60,6 +62,7 @@ class Project:
                     pygame.quit()
 
             pygame.display.update()
+            sleep(0.05)
             
     
 # engine by wilson
