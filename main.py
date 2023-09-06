@@ -3,6 +3,7 @@ from engine.sprite import Sprite
 from engine.structures import Colour
 
 towerdefense = Project("Tower Defense", 960, 640)
+towerdefense.set_icon("patrick.png")
 
 main_menu = towerdefense.create_scene("main_menu")
 towerdefense.create_scene("level_editor")

@@ -9,6 +9,9 @@ class Vector:
         return f"({self.x}, {self.y})"
 
 class Colour:
+    def random():
+        return Colour(randint(0, 255), randint(0, 255), randint(0, 255))
+
     def __init__(self, red: int, green: int, blue: int):
         if red < 0 or red > 255 or green < 0 or green > 255 or blue < 0 or blue > 255:
             raise Exception("Invalid RGB values specified for colour.")
@@ -28,9 +31,6 @@ class Colour:
         if len(hex_code) != 6:
             raise Exception("Invalid colour hex code specified.")
         return Colour(int(hex_code[0:2], 16), int(hex_code[2:4], 16), int(hex_code[4:6], 16))
-    
-    def random():
-        return Colour(randint(0, 255), randint(0, 255), randint(0, 255))
     
     def invert(self):
         return Colour(255 - self.red, 255 - self.green, 255 - self.blue)

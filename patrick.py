@@ -1,9 +1,11 @@
 from engine.structures import Colour
+from engine.audio import Audio
 
 SPEED_X = SPEED_Y = 200
 
 def ready(obj):
-    print("bruh")
+    music = Audio("Aerie.wav")
+    music.play()
 
 def update(obj, delta):
     global SPEED_X, SPEED_Y

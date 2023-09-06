@@ -8,6 +8,6 @@ class GameObject:
 
     def add_script(self, module):
         self.scripts.append(module)
-    
-    def get_scripts(self):
-        return self.scripts
+
+    def remove_script(self, module):
+        self.scripts.remove(module)

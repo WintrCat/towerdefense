@@ -1,6 +1,7 @@
 import pygame
 from time import sleep
 
+from engine.input import Input
 from engine.scene import Scene
 from engine.sprite import Sprite
 
@@ -16,9 +17,15 @@ class Project:
         self.height = height
 
         pygame.init()
+        pygame.mixer.init()
 
         self.__window = pygame.display.set_mode((width, height))
         pygame.display.set_caption(name)
+
+    # set window icon
+    def set_icon(self, icon_path: str):
+        icon_image = pygame.image.load(icon_path)
+        pygame.display.set_icon(icon_image)
 
     # manage scenes
     def create_scene(self, name: str):
@@ -77,7 +84,7 @@ class Project:
             if debug:
                 self.__window.blit(
                     debugFont.render(
-                        f"X: {pygame.mouse.get_pos()[0]}, Y: {pygame.mouse.get_pos()[1]}", 
+                        f"X: {Input.mouse_x()}, Y: {Input.mouse_y()}", 
                         False, 
                         self.active_scene.background_colour.invert().to_tuple()
                     ),
